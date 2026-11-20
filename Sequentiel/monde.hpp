@@ -47,4 +47,6 @@ void affichage_habitant(struct habitant* h);
 
 void liberer_monde(struct monde** m);
 
+void lecture(const char* nom_fichier, int* nb_iles, struct ile** iles, int** mat_adj);
+
 #endif

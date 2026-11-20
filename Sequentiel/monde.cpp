@@ -9,6 +9,27 @@ struct habitant* creation_habitant(char* nom, int suffixe) {
     return h;
 }
 
+void lecture(const char* filename, int* nb_iles, struct ile** ile_info, int** mat_adj) {
+    ifstream f(filename);
+    // Lecture du nombre d'îles
+    f >> *nb_iles;
+    *ile_info = new struct ile[*nb_iles];
+    // Lecture des informations sur les îles (numéro, nom, nombre d'habitants)
+    for (int i=0; i<*nb_iles; i++) {
+        f >> (*ile_info)[i].num >> (*ile_info)[i].nom >> (*ile_info)[i].nb_hab;
+    }
+    //matrice d'adjacence pour stocker les ponts
+    *mat_adj = (int*)calloc(*nb_iles**nb_iles,sizeof(int));
+    int nb_ponts, ile1, ile2;
+    f >> nb_ponts;
+    for (int i=0; i<nb_ponts; i++) {
+        f >> ile1 >> ile2;
+        (*mat_adj)[ile1*(*nb_iles)+ile2] = 1;
+        (*mat_adj)[ile2*(*nb_iles)+ile1] = 1;
+    }
+
+}
+
 struct monde* generation(const char* filename) {
     
     struct monde* m = (struct monde*)malloc(sizeof(struct monde));
